@@ -2,7 +2,7 @@ import sqlite3
 
 
 #attaches to database1.db, this could be turned into dynamic request
-conn = sqlite3.connect('/home/hbudzik/python/class_py_web_programming/sqlite_code/database1.db')
+conn = sqlite3.connect(':memory:')
 c = conn.cursor()
 
 
@@ -12,8 +12,8 @@ def interface_menu():
         "\n\tMenu\n"
         "\t 1) Prints out current data\n"
         "\t 2) Enter Data Into Table\n"
-        "\t 3)\n"
-        "\t 4) create new table\n"
+        "\t 3) Delete Data From Table\n"
+        "\t 4) Update table entry\n"
         "\t 5) Quit"
          )
     user_interface_input = input("\t :> ")
@@ -22,26 +22,27 @@ def interface_menu():
 
 #create table
 def create_table():
-    #table_name = input("New table name: ")
-    #column_name1 = input("Column name1: ")
-    #column_name2 = input("Column name2: ")
-    #column_name3 = input("Column name3: ")
-
-    c.execute("CREATE TABLE table1( column_name1 VARCHAR,   "
-                                "       column_name2 VARCHAR,   "
-                                "       column_name3 VARCHAR)   " )
+    c.execute("CREATE TABLE table1(     Key_id INTEGER,     "
+                                "       First_name TEXT,    "
+                                "       Last_name TEXT,     "
+                                "       Salary REAL        )"
+             )
+    c.execute("INSERT INTO table1 (Key_id, First_name, Last_name, Salary) VALUES (?, ?, ?, ?)", 
+        (1, 'FIRST NAME', 'LAST NAME', 'SALARY'))
     conn.commit()
 
 
 #adds data to database/tables
 def dynamic_enter_data():                    
     print("...\tdynamic_enter_data() init")
+ 
+    key_id = int(input("id: "))
+    name_first = input("First Name: ")
+    name_last = input("Last Name:  ")
+    salary_var = int(input("salary: "))
 
-    day = input("Enter day: ")
-    hours = input("hours: ")
-    tot = input("total$: ")
-
-    c.execute("INSERT INTO table1 (Day, Hours, Tot) VALUES (?, ?, ?)", (day, hours, tot))
+    c.execute("INSERT INTO table1 (Key_id, First_name, Last_name, Salary) VALUES (?, ?, ?, ?)", 
+        (key_id, name_first, name_last, salary_var))
     conn.commit()
 
 
@@ -55,6 +56,11 @@ def read_database():
 
 
 ##### interface #####
+#start main 
+
+create_table() 
+    #creates table in database named 'table1' and adds initial rows with columns
+
 loop_var = False
 while loop_var == False:
     opt = interface_menu()
@@ -67,7 +73,7 @@ while loop_var == False:
     elif opt == "3":
         print("\tyou selected 3")
     elif opt == "4":
-        create_table()
+        print("\t you selected 3")
     elif opt == "5":
         loop_var = True
     else:
