@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% block body %}
+	<button type="button" class="btn btn-{{button_type}}">Action</button>
+	<h4>{{name}}</h4>
+	<h5>Python versions:</h5>
+	{% for ver in example_list %}
+		<p>{{ver}}</p>
+	{% endfor %}
+<!-- Single button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+
+{% endblock %}
